@@ -9,7 +9,7 @@ export function Tasks() {
 
         <button>
           Criar
-          <PlusCircle />
+          <PlusCircle size={16}/>
         </button>
       </div>
 
