@@ -77,10 +77,10 @@ export function Tasks() {
         </button>
       </div>
 
-      <section className={styles.listTasks}>
+      <section className={styles.todoList}>
         <header className={styles.resumeTasks}>
-          <div>Tarefas criadas <span>1</span></div>
-          <div>Concluídas <span>0 de 1</span></div>
+          <div className={styles.createdTasks}>Tarefas criadas <span>1</span></div>
+          <div className={styles.completedTasks}>Concluídas <span>0 de 1</span></div>
         </header>
 
         <ul>
