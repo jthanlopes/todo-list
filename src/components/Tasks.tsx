@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { PlusCircle, Trash } from 'phosphor-react';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -29,10 +29,12 @@ export function Tasks() {
     }
   ]);
   const [taskContent, setTaskContent] = useState('');
-  const isNewTaskEmpty = taskContent.length === 0;
+  const isNewTaskInputEmpty = taskContent.length === 0;
+  const totalCreatedTasks = tasks.length;
+  const totalCompletedTasks = tasks.filter(task => task.isCompleted===true).length;
 
   function handleAddTask() {
-    if(isNewTaskEmpty) return
+    if(isNewTaskInputEmpty) return
 
     const newTask: TaskProps = {
       id: uuidv4(),
@@ -79,8 +81,16 @@ export function Tasks() {
 
       <section className={styles.todoList}>
         <header className={styles.resumeTasks}>
-          <div className={styles.createdTasks}>Tarefas criadas <span>1</span></div>
-          <div className={styles.completedTasks}>Concluídas <span>0 de 1</span></div>
+          <div
+            className={styles.createdTasks}
+          >
+            Tarefas criadas<span>{totalCreatedTasks}</span>
+          </div>
+          <div
+            className={styles.completedTasks}
+          >
+            Concluídas<span>{`${totalCompletedTasks} de ${totalCreatedTasks}`}</span>
+          </div>
         </header>
 
         <ul>
