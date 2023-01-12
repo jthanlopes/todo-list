@@ -20,12 +20,12 @@ export function Tasks() {
     {
       id: uuidv4(),
       content: 'Tarefa 2',
-      isCompleted: true
+      isCompleted: false
     },
     {
       id: uuidv4(),
       content: 'Tarefa 3',
-      isCompleted: true
+      isCompleted: false
     }
   ]);
   const [taskContent, setTaskContent] = useState('');
@@ -33,7 +33,9 @@ export function Tasks() {
   const totalCreatedTasks = tasks.length;
   const totalCompletedTasks = tasks.filter(task => task.isCompleted===true).length;
 
-  function handleAddTask() {
+  function handleAddTask(event: FormEvent) {
+    event.preventDefault()
+
     if(isNewTaskInputEmpty) return
 
     const newTask: TaskProps = {
@@ -63,7 +65,7 @@ export function Tasks() {
 
   return (
     <main className={styles.tasks}>
-      <form className={styles.addTasks} onSubmit={(e: FormEvent) => e.preventDefault()}>
+      <form className={styles.addTasks} onSubmit={handleAddTask}>
         <input
           type="text"
           placeholder="Adicione uma nova tarefa"
@@ -72,8 +74,7 @@ export function Tasks() {
         />
 
         <button
-          type="button"
-          onClick={handleAddTask}
+          type="submit"
         >
           Criar
           <PlusCircle size={16}/>
@@ -98,14 +99,14 @@ export function Tasks() {
           {
             tasks.map(task => {
               return (
-                <li key={task.id}>
+                <li key={task.id} className={task.isCompleted ? 'taskCompleted' : ''}>
                   <label htmlFor="task-completed">
                     <input id="task-completed" type="checkbox" onClick={() => handleCompleteTask(task.id)}></input>
                     <span className={styles.checkmark}></span>
                   </label>
                   <p>{task.content}</p>
                   <button title="Deletar tarefa" onClick={() => handleDeleteTask(task.id)}>
-                    <Trash />
+                    <Trash size={18}/>
                   </button>
                 </li>
               )
