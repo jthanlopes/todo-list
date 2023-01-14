@@ -1,5 +1,6 @@
 import { FormEvent, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { EmptyTasks } from './EmptyTasks';
 
 import { FormAddNewTask } from './FormAddNewTask';
 import { Task } from './Task';
@@ -75,22 +76,24 @@ export function TaskList() {
           </div>
         </header>
 
-        <ul>
           {
-            tasks.map(task => {
-              return (
-                <Task
-                  key={task.id}
-                  id={task.id}
-                  isCompleted={task.isCompleted}
-                  content={task.content}
-                  completeTask={handleCompleteTask}
-                  deleteTask={handleDeleteTask}
-                />
-              )
-            })
+            (tasks.length === 0)
+            ? <EmptyTasks />
+            : <ul>
+                {tasks.map(task => {
+                  return (
+                    <Task
+                      key={task.id}
+                      id={task.id}
+                      isCompleted={task.isCompleted}
+                      content={task.content}
+                      completeTask={handleCompleteTask}
+                      deleteTask={handleDeleteTask}
+                    />
+                  )
+                })}
+              </ul>
           }
-        </ul>
       </section>
     </main>
   );

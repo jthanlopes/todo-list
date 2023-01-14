@@ -24,21 +24,17 @@
   box-sizing: border-box;
 }
 
-@media(max-width:768px) {
-  html {
-    font-size: 87,5%;
-  }
-}
-
 body {
   background-color: var(--gray-600);
   color: var(--gray-100);
   -webkit-font-smoothing: antialiased;
 }
 
-body, input, textarea, button {
+body, input, button {
   font-family: 'Inter', sans-serif;
   font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.4rem;
 }
 
 button {
@@ -47,4 +43,10 @@ button {
 
 ul {
   list-style: none;
+}
+
+@media(max-width:768px) {
+  html {
+    font-size: 87,5%;
+  }
 }
