@@ -1,9 +1,10 @@
 import { FormEvent, useState } from 'react';
-import { Trash } from 'phosphor-react';
 import { v4 as uuidv4 } from 'uuid';
 
-import styles from './Tasks.module.css';
 import { FormAddNewTask } from './FormAddNewTask';
+import { Task } from './Task';
+
+import styles from './TaskList.module.css';
 
 interface TaskProps {
   id: string;
@@ -11,7 +12,7 @@ interface TaskProps {
   isCompleted: boolean;
 }
 
-export function Tasks() {
+export function TaskList() {
   const [tasks, setTasks] = useState<TaskProps[]>([]);
   const [taskContent, setTaskContent] = useState('');
   const isNewTaskInputEmpty = taskContent.length === 0;
@@ -78,16 +79,14 @@ export function Tasks() {
           {
             tasks.map(task => {
               return (
-                <li key={task.id} className={task.isCompleted ? 'taskCompleted' : ''}>
-                  <label htmlFor="task-completed">
-                    <input id="task-completed" type="checkbox" onClick={() => handleCompleteTask(task.id)}></input>
-                    <span className={styles.checkmark}></span>
-                  </label>
-                  <p>{task.content}</p>
-                  <button title="Deletar tarefa" onClick={() => handleDeleteTask(task.id)}>
-                    <Trash size={18}/>
-                  </button>
-                </li>
+                <Task
+                  key={task.id}
+                  id={task.id}
+                  isCompleted={task.isCompleted}
+                  content={task.content}
+                  completeTask={handleCompleteTask}
+                  deleteTask={handleDeleteTask}
+                />
               )
             })
           }
