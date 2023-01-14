@@ -1,8 +1,9 @@
 import { FormEvent, useState } from 'react';
-import { PlusCircle, Trash } from 'phosphor-react';
+import { Trash } from 'phosphor-react';
 import { v4 as uuidv4 } from 'uuid';
 
 import styles from './Tasks.module.css';
+import { FormAddNewTask } from './FormAddNewTask';
 
 interface TaskProps {
   id: string;
@@ -11,23 +12,7 @@ interface TaskProps {
 }
 
 export function Tasks() {
-  const [tasks, setTasks] = useState<TaskProps[]>([
-    {
-      id: uuidv4(),
-      content: 'Tarefa 1',
-      isCompleted: false
-    },
-    {
-      id: uuidv4(),
-      content: 'Tarefa 2',
-      isCompleted: false
-    },
-    {
-      id: uuidv4(),
-      content: 'Tarefa 3',
-      isCompleted: false
-    }
-  ]);
+  const [tasks, setTasks] = useState<TaskProps[]>([]);
   const [taskContent, setTaskContent] = useState('');
   const isNewTaskInputEmpty = taskContent.length === 0;
   const totalCreatedTasks = tasks.length;
@@ -57,6 +42,10 @@ export function Tasks() {
     setTasks(newTasks);
   }
 
+  function handleSetTaskContent(content: string) {
+    setTaskContent(content)
+  }
+
   function handleDeleteTask(idTask: string) {
     const filteredTasks = tasks.filter(task => task.id !== idTask);
 
@@ -65,21 +54,11 @@ export function Tasks() {
 
   return (
     <main className={styles.tasks}>
-      <form className={styles.addTasks} onSubmit={handleAddTask}>
-        <input
-          type="text"
-          placeholder="Adicione uma nova tarefa"
-          onChange={(event) => setTaskContent(event.target.value)}
-          value={taskContent}
-        />
-
-        <button
-          type="submit"
-        >
-          Criar
-          <PlusCircle size={16}/>
-        </button>
-      </form>
+      <FormAddNewTask
+        addNewTask={handleAddTask}
+        setNewTaskContent={handleSetTaskContent}
+        taskContent={taskContent}
+      />
 
       <section className={styles.todoList}>
         <header className={styles.resumeTasks}>
