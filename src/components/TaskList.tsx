@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { EmptyTasks } from './EmptyTasks';
 
@@ -14,11 +14,27 @@ interface TaskProps {
 }
 
 export function TaskList() {
-  const [tasks, setTasks] = useState<TaskProps[]>([]);
+  const [tasks, setTasks] = useState<TaskProps[]>(() => {
+    const storageTasksAsJSON = localStorage.getItem('@todolist:tasks');
+
+    if(storageTasksAsJSON) {
+      return JSON.parse(storageTasksAsJSON)
+    }
+
+    return [];
+  });
   const [taskContent, setTaskContent] = useState('');
   const isNewTaskInputEmpty = taskContent.length === 0;
   const totalCreatedTasks = tasks.length;
   const totalCompletedTasks = tasks.filter(task => task.isCompleted===true).length;
+
+  console.log(tasks);
+
+  useEffect(() => {
+    const tasksToJSON = JSON.stringify(tasks);
+
+    localStorage.setItem('@todolist:tasks', tasksToJSON);
+  }, [tasks]);
 
   function handleAddTask(event: FormEvent) {
     event.preventDefault()

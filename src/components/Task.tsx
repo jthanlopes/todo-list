@@ -14,7 +14,7 @@ export function Task({id, isCompleted, content, completeTask, deleteTask}: TaskP
   return (
     <li className={styles.task}>
       <label>
-        <input type="checkbox" onClick={() => completeTask(id)}></input>
+        <input type="checkbox" onClick={() => completeTask(id)} defaultChecked={isCompleted}></input>
         <span className={styles.checkmark}></span>
         <p>{content}</p>
       </label>
