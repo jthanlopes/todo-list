@@ -1,7 +1,7 @@
 li {
   display: flex;
   gap: 0.75rem;
-  align-items: center;
+  align-items: flex-start;
 
   background-color: var(--gray-500);
   border-radius: 8px;
@@ -12,15 +12,68 @@ li + li {
   margin-top: 0.75rem;
 }
 
-li input {
-  width: 1.5rem;
-  height: 1.5rem;
-  background-color: transparent;
-  border-radius: 999px;
-  border: 1px solid var(--blue);
+label {
+  flex-grow: 2;
+
+  display: flex;
+  position: relative;
+  gap: 1.84rem;
+  cursor: pointer;
 }
 
-li p {
+label input[type="checkbox"] {
+  opacity: 0;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1.09rem;
+  height: 1.09rem;
+  border: 2px solid var(--blue);
+  border-radius: 50%;
+}
+
+label input[type="checkbox"]:hover + .checkmark {
+  border: 2px solid var(--blue-dark);
+  opacity: 0.8;
+}
+
+label input[type="checkbox"]:checked + .checkmark {
+  background-color: var(--purple-dark);
+  border: none;
+}
+
+label input[type="checkbox"]:checked:hover + .checkmark {
+  background-color: var(--purple);
+  opacity: 0.8;
+  border: none;
+}
+
+label .checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+  left: 6px;
+  top: 3px;
+  width: 0.293rem;
+  height: 0.456rem;
+  border: solid white;
+  border-width: 0 1px 1px 0;
+  color: var(--gray-100);
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+label input[type="checkbox"]:checked + .checkmark:after {
+  display: block;
+}
+
+label p {
   flex-grow: 1;
 
   font-size: 0.875rem;
@@ -28,10 +81,15 @@ li p {
   line-height: 1.25rem;
 }
 
+input[type="checkbox"]:checked ~ p {
+  text-decoration: line-through;
+  color: var(--gray-300);
+}
+
 li button {
   background-color: transparent;
   border: 0;
-  font: 0;
+  font-size: 0;
 
   display: flex;
   justify-content: center;

@@ -12,12 +12,12 @@ interface TaskProps {
 
 export function Task({id, isCompleted, content, completeTask, deleteTask}: TaskProps) {
   return (
-    <li className={isCompleted ? 'taskCompleted' : ''}>
+    <li className={styles.task}>
       <label>
         <input type="checkbox" onClick={() => completeTask(id)}></input>
         <span className={styles.checkmark}></span>
+        <p>{content}</p>
       </label>
-      <p>{content}</p>
       <button title="Deletar tarefa" onClick={() => deleteTask(id)}>
         <Trash size={18}/>
       </button>
