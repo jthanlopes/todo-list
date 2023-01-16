@@ -1,4 +1,5 @@
 import { FormEvent, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import { v4 as uuidv4 } from 'uuid';
 import { EmptyTasks } from './EmptyTasks';
 
@@ -28,8 +29,6 @@ export function TaskList() {
   const totalCreatedTasks = tasks.length;
   const totalCompletedTasks = tasks.filter(task => task.isCompleted===true).length;
 
-  console.log(tasks);
-
   useEffect(() => {
     const tasksToJSON = JSON.stringify(tasks);
 
@@ -49,6 +48,8 @@ export function TaskList() {
 
     setTasks((state) => [...state, newTask]);
     setTaskContent('');
+
+    toast.success('Tarefa criada com sucesso!');
   }
 
   function handleCompleteTask(idTask: string) {
@@ -68,6 +69,8 @@ export function TaskList() {
     const filteredTasks = tasks.filter(task => task.id !== idTask);
 
     setTasks(filteredTasks);
+
+    toast.error('Tarefa removida com sucesso!');
   }
 
   return (
